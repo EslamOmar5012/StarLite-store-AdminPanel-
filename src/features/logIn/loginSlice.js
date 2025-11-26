@@ -19,6 +19,7 @@ export const adminLogIn = createAsyncThunk(
       if (data.status === "fail" || data.status === "error")
         throw new Error(data.message);
 
+      if (data.role !== "admin") throw new Error("user doesn't have authorize");
       return data;
     } catch (e) {
       if (e.message === "failed to fetch") e.message = "can't signIn right now";

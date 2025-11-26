@@ -8,12 +8,36 @@ import {
 import { store } from "./Services/store";
 import { ToastContainer } from "react-toastify";
 const Loader = lazy(() => import("./ui/loader"));
-const ProtectedAuth = lazy(() => import("./ui/ProtectedAuth"));
+const ProtectedLogin = lazy(() => import("./ui/ProtectedLogin"));
 const Login = lazy(() => import("./features/logIn/Login"));
 const AdminPanel = lazy(() => import("./ui/AdminPanel"));
 const Error = lazy(() => import("./ui/Error"));
 
-const router = createBrowserRouter([]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Loader />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/login",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Login />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/admin/:user",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <ProtectedLogin>
+          <AdminPanel />
+        </ProtectedLogin>
+      </Suspense>
+    ),
+  },
+]);
 
 function App() {
   useEffect(() => {

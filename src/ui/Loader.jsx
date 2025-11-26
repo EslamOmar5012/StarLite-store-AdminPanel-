@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { loggedIn } from "../features/logIn/loginSlice";
 import { API_GET_DATA } from "../utils/config";
@@ -23,11 +23,10 @@ const Loader = () => {
         const data = await res.json();
 
         if (data.status === "fail" || data.status === "error")
-          navigate("/admin/login");
+          return navigate("/login", { replace: true });
 
-        console.log(data);
         dispatch(loggedIn(data.user));
-        navigate(`/admin/adminpanel`);
+        navigate(`/admin/${data.user.username}`, { replace: true });
       } catch (err) {
         console.error(err);
       }

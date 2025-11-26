@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn, Shield, Star } from "lucide-react";
-import { Link } from "react-router";
+import { Link, Navigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { adminLogIn } from "./loginSlice";
@@ -13,13 +13,15 @@ function Login() {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
-  const status = useSelector((store) => store.login.status);
+  const { user, status } = useSelector((store) => store.login);
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
     console.log(data);
     dispatch(adminLogIn(data));
   };
+
+  if (user) return <Navigate to={`/admin/${user.username}`} replace />;
 
   return (
     <div
