@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, LogIn, Shield, Star } from "lucide-react";
-import { Link, Navigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { adminLogIn } from "./loginSlice";
@@ -15,10 +15,16 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const { user, status } = useSelector((store) => store.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
     dispatch(adminLogIn(data));
+  };
+
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    navigate("/forgotpassword");
   };
 
   if (user) return <Navigate to={`/admin/${user.username}`} replace />;
@@ -72,7 +78,7 @@ function Login() {
                     id="usernameoremail"
                     type="text"
                     required
-                    className="bg-slate-900/50 py-3 pr-4 pl-12 border border-blue-500/30 focus:border-blue-400/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 w-full text-white transition-all duration-300 placeholder-blue-300/50"
+                    className="bg-slate-900/50 py-3 pr-4 pl-12 border border-blue-500/30 focus:border-blue-400/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 w-full text-white truncate transition-all duration-300 placeholder-blue-300/50"
                     placeholder="admin@example.com / username"
                   />
                 </div>
@@ -128,11 +134,12 @@ function Login() {
               )}
             </div>
 
-            {/* Remember Me & Forgot Password */}
+            {/* Forgot Password */}
             <div className="flex justify-between items-center text-sm">
               <Link
                 to="/forgotPassword"
                 className="font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+                onClick={handleForgotPassword}
               >
                 Forgot password?
               </Link>

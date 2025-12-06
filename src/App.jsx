@@ -10,6 +10,15 @@ import { ToastContainer } from "react-toastify";
 const Loader = lazy(() => import("./ui/loader"));
 const ProtectedLogin = lazy(() => import("./ui/ProtectedLogin"));
 const Login = lazy(() => import("./features/logIn/Login"));
+const ForgotPassword = lazy(() =>
+  import("./features/forgotPassword/ForgotPassword")
+);
+const ProtectedForgotPassword = lazy(() =>
+  import("./ui/ProtectedForgotPassword")
+);
+
+const Userstab = lazy(() => import("./features/users/Userstab"));
+
 const AdminPanel = lazy(() => import("./ui/AdminPanel"));
 const Error = lazy(() => import("./ui/Error"));
 
@@ -23,7 +32,19 @@ const router = createBrowserRouter([
     path: "/login",
     element: (
       <Suspense fallback={<Loader />}>
-        <Login />
+        <ProtectedLogin>
+          <Login />
+        </ProtectedLogin>
+      </Suspense>
+    ),
+  },
+  {
+    path: "/forgotpassword",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <ProtectedForgotPassword>
+          <ForgotPassword />
+        </ProtectedForgotPassword>
       </Suspense>
     ),
   },
@@ -36,6 +57,8 @@ const router = createBrowserRouter([
         </ProtectedLogin>
       </Suspense>
     ),
+    errorElement: <Error />,
+    children: [{ path: "users", element: <Userstab /> }],
   },
 ]);
 
