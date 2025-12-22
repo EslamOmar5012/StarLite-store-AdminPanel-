@@ -14,12 +14,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser } from "./usersSlice";
-import { useNavigate } from "react-router-dom";
 
 function UserDetailsModal({ selectedUser, setSelectedUser, setUpdateUsers }) {
   const [showPassword, setShowPassword] = useState(false);
   const deleting = useSelector((store) => store.users.deleting);
-  const user = useSelector((store) => store.login.user);
   const {
     register,
     handleSubmit,

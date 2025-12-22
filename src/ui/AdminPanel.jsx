@@ -18,7 +18,6 @@ export default function AdminPanel() {
   }, [user, navigate]);
 
   const handleLogout = () => {
-    console.log("Eslam");
     dispatch(adminLogout());
   };
 

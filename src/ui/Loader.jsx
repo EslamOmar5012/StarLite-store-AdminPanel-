@@ -22,7 +22,11 @@ const Loader = () => {
 
         const data = await res.json();
 
-        if (data.status === "fail" || data.status === "error")
+        if (
+          data.status === "fail" ||
+          data.status === "error" ||
+          data.role !== "admin"
+        )
           return navigate("/login", { replace: true });
 
         dispatch(loggedIn(data.user));
